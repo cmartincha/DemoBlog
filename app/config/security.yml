@@ -1,0 +1,44 @@
+security:
+    providers:
+        in_memory:
+            memory: ~
+        in_db:
+            entity:
+                class: Blog\BlogBundle\Entity\User
+                property: username
+
+    firewalls:
+        secured_area:
+          pattern: ^/
+          anonymous: ~
+          form_login:
+            login_path: login
+            check_path: login_check
+            csrf_provider: form.csrf_provider
+            default_target_path: blog_blog_homepage
+          logout:
+            path: /logout
+            target: blog_blog_homepage
+          http_basic:
+            provider: in_db
+          remember_me:
+            key: "%secret%"
+            lifetime: 2592000
+            path: blog_blog_homepage
+            domain: ~
+
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        default:
+            anonymous: ~
+
+    access_control:
+      - { path: ^/admin, roles: ROLE_ADMIN }
+      - { path: ^/user, roles: ROLE_USER }
+
+    encoders:
+        Blog\BlogBundle\Entity\User:
+          algorithm: bcrypt
+          cost: 12

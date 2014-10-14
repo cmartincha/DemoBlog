@@ -1,0 +1,142 @@
+{% extends '::Blog/base.html.twig' %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+        var FORM_REGISTER_ID = '{{ form_register.vars.id }}';
+        var FORM_REGISTER_EMAIL_ID = '{{ form_register.user.email.vars.id }}';
+        var FORM_REGISTER_USERNAME_ID = '{{ form_register.user.username.vars.id }}';
+        var FORM_REGISTER_PASSWORD_ID = '{{ form_register.user.password.vars.id }}';
+        var FORM_REGISTER_REPEAT_PASSWORD_ID = '{{ form_register.repeatPassword.vars.id }}';
+    </script>
+    <script type="text/javascript" defer src="{{ asset('bundles/blog/js/login.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2 class="text-center">{% trans %} Login {% endtrans %}</h2>
+
+                    <form action="{{ path('login_check') }}" method="post" role="form">
+
+                        {% if login_error is not empty %}
+                            <div class="form-error alert alert-danger" role="alert">
+                                {{ login_error.message }}
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            <label for="username">{% trans %} Nombre de usuario {% endtrans %}</label>
+                            <input type="text" class="form-control" name="_username" id="username" placeholder="{% trans %} Nombre de usuario {% endtrans %}" value="{{ last_username }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">{% trans %} Contraseña {% endtrans %}</label>
+                            <input type="password" class="form-control" id="password" name="_password" placeholder="{% trans %} Contraseña {% endtrans %}">
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input id="remember_me" name="_remember_me" type="checkbox"> {% trans %} Recordarme {% endtrans %}
+                            </label>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <button type="submit" class="btn btn-default btn-primary btn-lg btn-block">{% trans %} Entrar {% endtrans %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2 class="text-center form-title">{% trans %} Registrarse {% endtrans %}</h2>
+
+                    {{ form_start(form_register, {'attr': {'role': 'form'}}) }}
+                        {% set email_errors = form_register.user.email.vars.errors %}
+                        {% set username_errors = form_register.user.username.vars.errors %}
+                        {% set password_errors = form_register.user.password.vars.errors %}
+                        {% set repeat_password_errors = form_register.repeatPassword.vars.errors %}
+                        {% set form_errors = form_register.vars.errors %}
+
+                        {% if form_errors|length > 0 %}
+                            <div class="form-error alert alert-danger" role="alert">
+                                {{ form_errors(form_register) }}
+                            </div>
+                        {% endif %}
+
+                        {% if email_errors|length > 0  %}
+                            <div class="form-group has-error has-feedback">
+                                {{ form_label(form_register.user.email, null, {'label_attr': {'class': 'control-label'}}) }}
+                                {{ form_widget(form_register.user.email, {'attr': {'class': 'form-control', 'placeholder': form_register.user.email.vars.label}}) }}
+                                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                <div class="form-error alert alert-danger" role="alert">
+                                    {{ form_errors(form_register.user.email) }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="form-group">
+                                {{ form_label(form_register.user.email) }}
+                                {{ form_widget(form_register.user.email, {'attr': {'class': 'form-control', 'placeholder': form_register.user.email.vars.label}}) }}
+                            </div>
+                        {% endif %}
+
+                        {% if username_errors|length > 0 %}
+                            <div class="form-group has-error has-feedback">
+                                {{ form_label(form_register.user.username, null, {'label_attr': {'class': 'control-label'}}) }}
+                                {{ form_widget(form_register.user.username, {'attr': {'class': 'form-control', 'placeholder': form_register.user.username.vars.label}}) }}
+                                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                <div class="form-error alert alert-danger" role="alert">
+                                    {{ form_errors(form_register.user.username) }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="form-group">
+                                {{ form_label(form_register.user.username) }}
+                                {{ form_widget(form_register.user.username, {'attr': {'class': 'form-control', 'placeholder': form_register.user.username.vars.label}}) }}
+                            </div>
+                        {% endif %}
+
+                        {% if password_errors|length > 0 %}
+                            <div class="form-group has-error has-feedback">
+                                {{ form_label(form_register.user.password, null, {'label_attr': {'class': 'control-label'}}) }}
+                                {{ form_widget(form_register.user.password, {'attr': {'class': 'form-control', 'placeholder': form_register.user.password.vars.label}}) }}
+                                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                <div class="form-error alert alert-danger" role="alert">
+                                    {{ form_errors(form_register.user.password) }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="form-group">
+                                {{ form_label(form_register.user.password) }}
+                                {{ form_widget(form_register.user.password, {'attr': {'class': 'form-control', 'placeholder': form_register.user.password.vars.label}}) }}
+                            </div>
+                        {% endif %}
+
+                        {% if repeat_password_errors|length > 0 %}
+                            <div class="form-group has-error has-feedback">
+                                {{ form_label(form_register.repeatPassword, null, {'label_attr': {'class': 'control-label'}}) }}
+                                {{ form_widget(form_register.repeatPassword, {'attr': {'class': 'form-control', 'placeholder': form_register.repeatPassword.vars.label}}) }}
+                                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                <div class="form-error alert alert-danger" role="alert">
+                                    {{ form_errors(form_register.repeatPassword) }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="form-group">
+                                {{ form_label(form_register.repeatPassword) }}
+                                {{ form_widget(form_register.repeatPassword, {'attr': {'class': 'form-control', 'placeholder': form_register.repeatPassword.vars.label}}) }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_widget(form_register._token) }}
+
+                        {{ form_widget(form_register.register, {'attr': {'class': 'btn btn-default btn-primary btn-lg btn-block'}}) }}
+                    {{ form_end(form_register, {'render_rest': false}) }}
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+blog_blog:
+    resource: "@BlogBlogBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}
+    requirements:
+        _locale: en|es
+login:
+  path: /login
+  defaults: { _controller: BlogBlogBundle:Login:login }
+login_check:
+  path: /login_check
+logout:
+  path: /logout
