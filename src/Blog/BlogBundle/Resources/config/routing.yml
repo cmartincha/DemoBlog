@@ -4,7 +4,12 @@ blog_blog_homepage:
 blog_blog_login:
     path:     /login
     defaults: { _controller: BlogBlogBundle:Login:login }
-blog_blog_admin:
-    path: /admin
-blog_blog_user:
-    path: /user
+blog_blog_manage:
+    path: /manage
+    defaults: { _controller: BlogBlogBundle:Manage:manage }
+blog_blog_post:
+    path: /posts
+    defaults: { _controller: BlogBlogBundle:Post:list }
+blog_blog_post_create:
+  path: /posts/create
+  defaults: { _controller: BlogBlogBundle:Post:create }

@@ -1,0 +1,24 @@
+{% extends '::Blog/base.html.twig' %}
+
+{% block extra_js %}
+    <script defer type="text/javascript" src="{{ asset("bundles/blog/js/manage.js") }}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li id="manage-tab-post" class="manage-tab active"><a href="#manage-tab-content-post">{% trans %}
+                        Artículos{% endtrans %}</a></li>
+                <li id="manage-tab-comment" class="manage-tab"><a href="#manage-tab-content-comment">{% trans %}
+                        Comentarios{% endtrans %}</a></li>
+            </ul>
+            <div id="manage-tab-content-post" class="manage-tab-content">
+                {% include('@BlogBlog/Post/post_list.html.twig') %}
+            </div>
+            <div id="manage-tab-content-comment" class="manage-tab-content hidden">
+                comentarios
+            </div>
+        </div>
+    </div>
+{% endblock %}
