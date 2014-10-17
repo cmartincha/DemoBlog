@@ -14,7 +14,7 @@
                         Comentarios{% endtrans %}</a></li>
             </ul>
             <div id="manage-tab-content-post" class="manage-tab-content">
-                {% include('@BlogBlog/Post/post_list.html.twig') %}
+                {{ render(controller('BlogBlogBundle:Post:listManage')) }}
             </div>
             <div id="manage-tab-content-comment" class="manage-tab-content hidden">
                 comentarios

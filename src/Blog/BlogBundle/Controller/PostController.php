@@ -25,9 +25,14 @@ class PostController extends Controller
         $form_post_create->handleRequest($request);
 
         if ($form_post_create->isValid()) {
+            $user = $user = $this->getUser();
+            $post->setUser($user);
 
-        } else {
+            $entity_manager = $this->getDoctrine()->getManager();
+            $entity_manager->persist($post);
+            $entity_manager->flush();
 
+            return $this->redirect($this->generateUrl('blog_blog_manage'));
         }
 
         return $this->render('@BlogBlog/Post/post_create.html.twig', array('form_post_create' => $form_post_create->createView()));
@@ -43,8 +48,12 @@ class PostController extends Controller
 
     }
 
-    public function listAction()
+    public function listManageAction()
     {
+        $entity_manager = $this->getDoctrine()->getManager();
+        $posts = $entity_manager->getRepository('BlogBlogBundle:User')
+            ->findPostsOrderByDate($this->getUser()->getId());
 
+        return $this->render("@BlogBlog/Post/post_list.html.twig", compact('posts'));
     }
 } 

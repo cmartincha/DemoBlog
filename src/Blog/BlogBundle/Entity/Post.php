@@ -4,6 +4,7 @@ namespace Blog\BlogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * post
@@ -26,6 +27,7 @@ class Post
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -33,6 +35,7 @@ class Post
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank()
      */
     private $content;
 
@@ -64,6 +67,8 @@ class Post
 
     public function __construct() {
         $this->comments = new ArrayCollection();
+        $this->deleted = 0;
+        $this->creationDate = new \DateTime();
     }
 
     /**
@@ -74,6 +79,16 @@ class Post
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get titulo
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**
@@ -90,13 +105,13 @@ class Post
     }
 
     /**
-     * Get titulo
+     * Get content
      *
-     * @return string 
+     * @return string
      */
-    public function getTitle()
+    public function getContent()
     {
-        return $this->title;
+        return $this->content;
     }
 
     /**
@@ -113,13 +128,13 @@ class Post
     }
 
     /**
-     * Get content
+     * Get deleted
      *
-     * @return string 
+     * @return boolean
      */
-    public function getContent()
+    public function getDeleted()
     {
-        return $this->content;
+        return $this->deleted;
     }
 
     /**
@@ -136,13 +151,13 @@ class Post
     }
 
     /**
-     * Get deleted
+     * Get creationDate
      *
-     * @return boolean 
+     * @return \DateTime
      */
-    public function getDeleted()
+    public function getCreationDate()
     {
-        return $this->deleted;
+        return $this->creationDate;
     }
 
     /**
@@ -156,16 +171,6 @@ class Post
         $this->creationDate = $creationDate;
 
         return $this;
-    }
-
-    /**
-     * Get creationDate
-     *
-     * @return \DateTime 
-     */
-    public function getCreationDate()
-    {
-        return $this->creationDate;
     }
 
     /**
@@ -202,6 +207,16 @@ class Post
     }
 
     /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
      * Set user
      *
      * @param User $user
@@ -212,15 +227,5 @@ class Post
         $this->user = $user;
 
         return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return User
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 }

@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * user
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Blog\BlogBundle\Entity\UserRepository")
  */
 class User implements UserInterface
 {
@@ -100,6 +100,16 @@ class User implements UserInterface
     }
 
     /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
      * Set username
      *
      * @param string $username
@@ -113,13 +123,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get username
+     * Get password
      *
-     * @return string 
+     * @return string
      */
-    public function getUsername()
+    public function getPassword()
     {
-        return $this->username;
+        return $this->password;
     }
 
     /**
@@ -136,13 +146,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get password
+     * Get email
      *
-     * @return string 
+     * @return string
      */
-    public function getPassword()
+    public function getEmail()
     {
-        return $this->password;
+        return $this->email;
     }
 
     /**
@@ -159,13 +169,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get email
+     * Get deleted
      *
-     * @return string 
+     * @return boolean
      */
-    public function getEmail()
+    public function getDeleted()
     {
-        return $this->email;
+        return $this->deleted;
     }
 
     /**
@@ -182,13 +192,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get deleted
+     * Get creationDate
      *
-     * @return boolean 
+     * @return \DateTime
      */
-    public function getDeleted()
+    public function getCreationDate()
     {
-        return $this->deleted;
+        return $this->creationDate;
     }
 
     /**
@@ -202,16 +212,6 @@ class User implements UserInterface
         $this->creationDate = $creationDate;
 
         return $this;
-    }
-
-    /**
-     * Get creationDate
-     *
-     * @return \DateTime 
-     */
-    public function getCreationDate()
-    {
-        return $this->creationDate;
     }
 
     /**
@@ -281,29 +281,6 @@ class User implements UserInterface
     }
 
     /**
-     * Set rol
-     *
-     * @param Rol $rol
-     * @return User
-     */
-    public function setRol(Rol $rol = null)
-    {
-        $this->rol = $rol;
-
-        return $this;
-    }
-
-    /**
-     * Get rol
-     *
-     * @return Rol
-     */
-    public function getRol()
-    {
-        return $this->rol;
-    }
-
-    /**
      * Returns the roles granted to the user.
      *
      * <code>
@@ -324,6 +301,29 @@ class User implements UserInterface
         $rol = $this->getRol();
 
         return array($rol->getName());
+    }
+
+    /**
+     * Get rol
+     *
+     * @return Rol
+     */
+    public function getRol()
+    {
+        return $this->rol;
+    }
+
+    /**
+     * Set rol
+     *
+     * @param Rol $rol
+     * @return User
+     */
+    public function setRol(Rol $rol = null)
+    {
+        $this->rol = $rol;
+
+        return $this;
     }
 
     /**

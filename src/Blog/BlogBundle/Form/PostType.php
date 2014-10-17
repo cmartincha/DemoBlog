@@ -36,7 +36,7 @@ class PostType extends AbstractType
      */
     public function getName()
     {
-        return 'blog_blogbundle_post_create';
+        return 'blog_blogbundle_post';
     }
 
     /**
