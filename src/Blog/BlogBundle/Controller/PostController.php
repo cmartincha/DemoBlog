@@ -17,9 +17,16 @@ use Symfony\Component\HttpFoundation\Request;
 class PostController extends Controller
 {
 
-    public function createAction(Request $request)
+    public function saveAction($post_id, Request $request)
     {
-        $post = new Post();
+        if ($post_id) {
+            $post = $this->getDoctrine()
+                ->getRepository('BlogBlogBundle:Post')
+                ->find($post_id);
+        } else {
+            $post = new Post();
+        }
+
         $form_post_create = $this->createForm(new PostType(), $post);
 
         $form_post_create->handleRequest($request);
@@ -38,14 +45,18 @@ class PostController extends Controller
         return $this->render('@BlogBlog/Post/post_create.html.twig', array('form_post_create' => $form_post_create->createView()));
     }
 
-    public function updateAction()
+    public function deleteAction($post_id)
     {
+        if ($post_id > 0) {
+            $entity_manager = $this->getDoctrine()->getManager();
+            $post = $entity_manager->getRepository('BlogBlogBundle:Post')
+                ->find($post_id);
 
-    }
+            $entity_manager->remove($post);
+            $entity_manager->flush();
 
-    public function deleteAction()
-    {
-
+            return $this->redirect($this->generateUrl('blog_blog_manage'));
+        }
     }
 
     public function listManageAction()

@@ -18,7 +18,7 @@ class UserRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
             ->createQuery(
-                'SELECT p.title, p.content, p.deleted, p.creationDate
+                'SELECT p.id, p.title, p.content, p.deleted, p.creationDate
                     FROM BlogBlogBundle:Post p
                     WHERE p.user = :user_id
                     ORDER by p.creationDate'

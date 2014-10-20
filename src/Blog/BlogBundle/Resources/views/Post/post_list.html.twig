@@ -1,14 +1,23 @@
-<h2>Tus artículos<a href="{{ path('blog_blog_post_create') }}" class="pull-right btn btn-defatul btn-primary">Crear
+<h2>Tus artículos<a href="{{ path('blog_blog_post_create') }}" class="pull-right btn btn-defatul btn-primary"><span
+                class="glyphicon-plus glyphicon"></span>&nbsp;Crear
         nuevo</a></h2>
 
-{% for post in posts %}
-    <div class="list-group">
-        <a class="list-group-item">
+<div class="list-group">
+    {% for post in posts %}
+        <div class="list-group-item list-post">
+            <div class="pull-right">
+                <a href="{{ path('blog_blog_post_create', {'post_id': post.id}) }}" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    {% trans %}Editar{% endtrans %}</a>
+                <a href="{{ path('blog_blog_post_delete', {'post_id': post.id}) }}" class="btn btn-danger delete-post">
+                    <span class="glyphicon glyphicon-remove"></span>&nbsp;{% trans %}Eliminar{% endtrans %}</a>
+            </div>
             <h4 class="list-group-item-heading">{{ post.title }}</h4>
 
-            <p class="list-group-item-text">{{ post.content }}</p>
-
             <div class="clearfix"></div>
-        </a>
-    </div>
-{% endfor %}
+
+            <p style="margin-top: 15px;" class="list-group-item-text">{{ post.content }}</p>
+        </div>
+
+    {% endfor %}
+</div>

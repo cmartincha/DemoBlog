@@ -1,15 +1,23 @@
 blog_blog_homepage:
     path:     /
     defaults: { _controller: BlogBlogBundle:Home:index }
+
 blog_blog_login:
     path:     /login
     defaults: { _controller: BlogBlogBundle:Login:login }
+
 blog_blog_manage:
     path: /manage
     defaults: { _controller: BlogBlogBundle:Manage:manage }
+
 blog_blog_post:
     path: /posts
     defaults: { _controller: BlogBlogBundle:Post:list }
+
 blog_blog_post_create:
-  path: /posts/create
-  defaults: { _controller: BlogBlogBundle:Post:create }
+    path: /posts/create/{post_id}
+    defaults: { _controller: BlogBlogBundle:Post:save, post_id: 0 }
+
+blog_blog_post_delete:
+  path: /posts/delete/{post_id}
+  defaults: { _controller: BlogBlogBundle:Post:delete }
