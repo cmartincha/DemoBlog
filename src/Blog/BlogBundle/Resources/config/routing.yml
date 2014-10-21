@@ -1,6 +1,8 @@
 blog_blog_homepage:
-    path:     /
-    defaults: { _controller: BlogBlogBundle:Home:index }
+    path:     /{page}
+    defaults: { _controller: BlogBlogBundle:Home:index, page: 0 }
+    requirements:
+        page:  \d+
 
 blog_blog_login:
     path:     /login
@@ -17,6 +19,8 @@ blog_blog_post:
 blog_blog_post_create:
     path: /posts/create/{post_id}
     defaults: { _controller: BlogBlogBundle:Post:save, post_id: 0 }
+    requirements:
+      post_id: \d+
 
 blog_blog_post_delete:
   path: /posts/delete/{post_id}

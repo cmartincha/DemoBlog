@@ -10,6 +10,7 @@ namespace Blog\BlogBundle\Controller;
 
 
 use Blog\BlogBundle\Entity\Post;
+use Blog\BlogBundle\Entity\PostRepository;
 use Blog\BlogBundle\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,5 +67,30 @@ class PostController extends Controller
             ->findPostsOrderByDate($this->getUser()->getId());
 
         return $this->render("@BlogBlog/Post/post_list.html.twig", compact('posts'));
+    }
+
+    public function listHomeAction($page)
+    {
+        $entity_manager = $this->getDoctrine()
+            ->getManager();
+
+        $posts = $entity_manager->getRepository('BlogBlogBundle:Post')
+            ->findPostsOrderByDate($page);
+
+        return $this->render('@BlogBlog/Post/post_list_home.html.twig',
+            array(
+                'posts' => $posts,
+                'page' => $page,
+                'page_count' => ceil($posts->count() / PostRepository::RESULTS_PER_PAGE),
+            ));
+    }
+
+    public function archiveAction()
+    {
+        $entity_manager = $this->getDoctrine()->getManager();
+        $dates = $entity_manager->getRepository('BlogBlogBundle:Post')
+            ->findPostDates();
+
+        return $this->render('BlogBlogBundle:Post:post_archive.html.twig', compact('dates'));
     }
 } 

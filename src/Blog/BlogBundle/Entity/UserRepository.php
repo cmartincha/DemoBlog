@@ -17,12 +17,10 @@ class UserRepository extends EntityRepository
     public function findPostsOrderByDate($user_id)
     {
         $query = $this->getEntityManager()
-            ->createQuery(
-                'SELECT p.id, p.title, p.content, p.deleted, p.creationDate
+            ->createQuery('SELECT p.id, p.title, p.content, p.deleted, p.creationDate
                     FROM BlogBlogBundle:Post p
                     WHERE p.user = :user_id
-                    ORDER by p.creationDate'
-            )
+                    ORDER by p.creationDate')
             ->setParameter('user_id', $user_id);
 
         return $query->getArrayResult();

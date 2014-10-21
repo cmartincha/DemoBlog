@@ -1,0 +1,9 @@
+<div class="archive">
+    <h1 class="archive-title text-center">{% trans %}Archivo{% endtrans %}</h1>
+
+    <ul class="archive-content">
+        {% for date in dates %}
+            <li>{{ date(date.year ~ '-' ~ date.month ~ '-1')|date('F Y') }}</li>
+        {% endfor %}
+    </ul>
+</div>
